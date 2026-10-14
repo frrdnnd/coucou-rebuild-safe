@@ -20,6 +20,9 @@ pub const PANEL_H: f64 = 320.0;
 /// Logical size of the invisible strip that wakes the island when it is hidden.
 pub const STRIP_W: f64 = 240.0;
 pub const STRIP_H: f64 = 6.0;
+/// Logical gap between the top of the screen and the island, so it floats below a browser's tab
+/// strip instead of covering it. The wake strip moves down with it.
+pub const TOP_OFFSET: f64 = 48.0;
 
 pub const WINDOW_LABEL: &str = "island";
 
@@ -311,7 +314,7 @@ pub fn apply_geometry(app: &AppHandle, pref: &str, collapsed: bool) {
     let pw = (lw * scale).round().max(1.0) as u32;
     let ph = (lh * scale).round().max(1.0) as u32;
     let x = mp.x + (ms.width as i32 - pw as i32) / 2;
-    let y = mp.y;
+    let y = mp.y + (TOP_OFFSET * scale).round() as i32;
 
     // GTK never sizes a non-resizable window below its natural size (200 px
     // here), so on Linux the 6 px wake strip would stay a 200 px block. tao
